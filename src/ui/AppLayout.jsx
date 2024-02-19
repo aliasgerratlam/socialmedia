@@ -11,7 +11,7 @@ const AppLayout = () => {
         <aside className="max-h-[50rem] overflow-hidden py-4 px-8">
           <Sidebar />
         </aside>
-        <main className="bg-slate-50 min-h-screen border-x border-solid border-gray-200 p-4 rounded-2xl">
+        <main className="bg-slate-50 min-h-screen p-4">
           <Outlet />
         </main>
         <aside className="max-h-[50rem] overflow-hidden py-4 px-6">{/* <Sidebar /> */}</aside>
