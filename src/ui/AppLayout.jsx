@@ -7,7 +7,7 @@ const AppLayout = () => {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-[35rem_auto_35rem] overflow-hidden my-5">
+      <div className="grid grid-cols-[38rem_auto_38rem] overflow-hidden my-5">
         <aside className="max-h-[50rem] overflow-hidden py-4 px-8">
           <Sidebar />
         </aside>
