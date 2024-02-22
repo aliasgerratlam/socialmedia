@@ -2,18 +2,18 @@ import { HiMiniUserCircle, HiOutlineHandThumbUp, HiOutlineChatBubbleBottomCenter
 
 const Feed = () => {
   return (
-    <div className="bg-white border rounded-2xl">
+    <div className="bg-white border rounded-2xl my-5">
       <div className="flex items-start justify-between p-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer">
           <img src="https://doodleipsum.com/700/avatar-2?i=29a11c4444c4c0d795d3aba1c0ce37d0" alt="" className="size-14 rounded-full" />
-          <div className="">
+          <div>
             <h3 className="text-lg font-semibold">John Doe</h3>
             <div className="text-xs text-gray-500">@johndoe12</div>
           </div>
         </div>
         <div className="text-sm text-gray-500 font-regular">19 Feb, 2024</div>
       </div>
-      <div className="my-4 px-4">
+      <div className="mt-2 mb-4 px-4">
         <p>
           Welcome to the Koo family 🙂 <br />
           <br />

@@ -1,9 +1,15 @@
 import Feed from '../Features/Feed/Feed';
+import CreateFeed from '../Features/Feed/Create';
 
 const Home = () => {
   return (
     <>
-      <Feed />
+      <CreateFeed />
+      {Array.from({ length: 2 }).map(() => (
+        <div className="[&>*:first-child]:mt-4">
+          <Feed />
+        </div>
+      ))}
     </>
   );
 };
