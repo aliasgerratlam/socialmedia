@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { HiOutlineGlobeAlt, HiOutlineHome, HiOutlineHashtag } from 'react-icons/hi2';
 
 const Sidebar = ({ side }) => {
+  const navigate = useNavigate();
+
   if (side === 'left') {
     return (
       <div className="sidebar relative h-full text-right flex flex-col">
@@ -25,17 +28,11 @@ const Sidebar = ({ side }) => {
             </Button>
           </li>
           <li className="mt-4 mb-1">
-            <Button className="text-md min-w-48" type="primary">
+            <Button className="text-md min-w-48" type="primary" onClick={() => navigate('/create')}>
               Create
             </Button>
           </li>
         </ul>
-
-        <div className="mt-auto">
-          <Button className="min-w-48" type="primary">
-            Sign In
-          </Button>
-        </div>
       </div>
     );
   } else {
@@ -43,7 +40,21 @@ const Sidebar = ({ side }) => {
       <>
         <div className="sidebar relative h-full text-left flex flex-col w-3/6">
           <ul>
-            <li className="my-4 ">
+            {/* <li className="mb-2">
+              <div className="mt-auto">
+                <Button className="min-w-full" type="primary">
+                  Sign up
+                </Button>
+              </div>
+            </li> */}
+            <li>
+              <div className="mt-auto">
+                <Button className="min-w-full" type="primary" onClick={() => navigate('/auth/signup')}>
+                  Sign In
+                </Button>
+              </div>
+            </li>
+            <li className="my-4 mt-5">
               <div className="relative ">
                 <label htmlFor="Search" className="sr-only">
                   Search
