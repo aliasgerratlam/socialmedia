@@ -49,7 +49,7 @@ const Sidebar = ({ side }) => {
             </li> */}
             <li>
               <div className="mt-auto">
-                <Button className="min-w-full" type="primary" onClick={() => navigate('/auth/signup')}>
+                <Button className="min-w-full" type="primary" onClick={() => navigate('/auth/signin')}>
                   Sign In
                 </Button>
               </div>

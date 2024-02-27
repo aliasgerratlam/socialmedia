@@ -3,6 +3,7 @@ import Home from './Pages/Home';
 import AppLayout from './ui/AppLayout';
 import CreateFeed from './Pages/CreateFeed';
 import Signup from './auth/Signup';
+import SignIn from './auth/Signin';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           </Route>
           <Route path="/create" element={<CreateFeed />} />
           <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/signin" element={<SignIn />} />
         </Routes>
       </BrowserRouter>
     </>
