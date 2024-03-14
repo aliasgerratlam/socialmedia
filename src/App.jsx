@@ -4,6 +4,7 @@ import AppLayout from './ui/AppLayout';
 import CreateFeed from './Pages/CreateFeed';
 import Signup from './auth/Signup';
 import SignIn from './auth/Signin';
+import AuthLayout from './auth/AuthLayout';
 
 function App() {
   return (
@@ -14,8 +15,11 @@ function App() {
             <Route index element={<Home />} />
           </Route>
           <Route path="/create" element={<CreateFeed />} />
-          <Route path="/auth/signup" element={<Signup />} />
-          <Route path="/auth/signin" element={<SignIn />} />
+
+          <Route element={<AuthLayout />}>
+            <Route path="/auth/signup" element={<Signup />} />
+            <Route path="/auth/signin" element={<SignIn />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
