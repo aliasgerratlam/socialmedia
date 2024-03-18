@@ -1,8 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import supabase from '../services/supabase';
 
 const SignIn = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: user.password
+    })
+    
+    
+
+    console.log(data)
+  }
 
   return (
     <section className="bg-white">
@@ -27,14 +44,14 @@ const SignIn = () => {
 
             <p className="mt-4 leading-relaxed text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.</p>
 
-            <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+            <form action="#" className="mt-8 grid grid-cols-6 gap-6" onSubmit={handleSubmit}>
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="Email" className="block text-sm font-medium text-gray-700">
                   {' '}
                   Email{' '}
                 </label>
 
-                <input type="email" id="Email" name="email" className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
+                <input type="email" id="Email" name="email" value={user.email} onChange={e => setUser({ ...user, email: e.target.value })} className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
               </div>
 
               <div className="col-span-6 sm:col-span-3">
@@ -43,7 +60,7 @@ const SignIn = () => {
                   Password{' '}
                 </label>
 
-                <input type="password" id="Password" name="password" className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
+                <input type="password" id="Password" name="password" value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
               </div>
 
               <div className="col-span-6">
@@ -62,7 +79,7 @@ const SignIn = () => {
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">Login Now</button>
+                <button type='submit' className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">Login Now</button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                   Don't have account?{' '}

@@ -7,6 +7,7 @@ import SignIn from './auth/Signin';
 import AuthLayout from './auth/AuthLayout';
 
 function App() {
+  
   return (
     <>
       <BrowserRouter>
@@ -15,11 +16,10 @@ function App() {
             <Route index element={<Home />} />
           </Route>
           <Route path="/create" element={<CreateFeed />} />
+          <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/signin" element={<SignIn />} />
 
-          <Route element={<AuthLayout />}>
-            <Route path="/auth/signup" element={<Signup />} />
-            <Route path="/auth/signin" element={<SignIn />} />
-          </Route>
+          <Route element={<AuthLayout />}></Route>
         </Routes>
       </BrowserRouter>
     </>
