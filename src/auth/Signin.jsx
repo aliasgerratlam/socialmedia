@@ -1,24 +1,34 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import supabase from '../services/supabase';
+import { Link, useNavigate } from 'react-router-dom';
+import { Login as loginApi } from '../services/apiAuth';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const SignIn = () => {
   const [user, setUser] = useState({
     email: '',
     password: ''
   });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const {mutate: login, isLoading} = useMutation({
+    mutationFn: (user) => loginApi({email: user.email, password: user.password}),
+    onSuccess: (user) => {
+      queryClient.setQueryData(["user"], user);
+      if(user.user.role === "authenticated") navigate("/");
+    },
+    onError: (err) => console.log(err)
+  })
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!user.email || !user.password) return;
 
-    let { data, error } = await supabase.auth.signInWithPassword({
-      email: user.email,
-      password: user.password
-    })
+    login(user); 
     
-    
-
-    console.log(data)
+    // const data = await Login(user.email, user.password);
+    // if(data.user.role === "authenticated") navigate("/");
   }
 
   return (
@@ -59,7 +69,6 @@ const SignIn = () => {
                   {' '}
                   Password{' '}
                 </label>
-
                 <input type="password" id="Password" name="password" value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
               </div>
 
@@ -79,7 +88,7 @@ const SignIn = () => {
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button type='submit' className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">Login Now</button>
+                <button type='submit' className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">{!isLoading ? "Login Now" : "Signing..."}</button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                   Don't have account?{' '}

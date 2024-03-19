@@ -5,11 +5,22 @@ import CreateFeed from './Pages/CreateFeed';
 import Signup from './auth/Signup';
 import SignIn from './auth/Signin';
 import AuthLayout from './auth/AuthLayout';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000
+      },
+    }
+  });
   
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>
@@ -22,7 +33,7 @@ function App() {
           <Route element={<AuthLayout />}></Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 }
 
