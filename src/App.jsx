@@ -7,6 +7,8 @@ import SignIn from './auth/Signin';
 import AuthLayout from './auth/AuthLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useEffect } from 'react';
+import { getCurrentUser } from './services/apiAuth';
 
 function App() {
   const queryClient = new QueryClient({

@@ -5,8 +5,8 @@ const Home = () => {
   return (
     <>
       <CreateFeed />
-      {Array.from({ length: 2 }).map(() => (
-        <div className="[&>*:first-child]:mt-4">
+      {Array.from({ length: 2 }).map((_, i) => (
+        <div key={i} className="[&>*:first-child]:mt-4">
           <Feed />
         </div>
       ))}

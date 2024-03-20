@@ -1,33 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { HiOutlineGlobeAlt, HiOutlineHome, HiOutlineHashtag } from 'react-icons/hi2';
+import { useUser } from '../auth/useUser';
 
 const Sidebar = ({ side }) => {
   const navigate = useNavigate();
+  const {isAuthenticated, isPending} = useUser();
 
   if (side === 'left') {
     return (
       <div className="sidebar relative h-full text-right flex flex-col">
-        <ul>
-          <li className="my-4">
+        <ul className='space-y-3'>
+          <li>
             <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
               <HiOutlineHome />
               Feed
             </Button>
           </li>
-          <li className="my-4">
+          <li>
             <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
               <HiOutlineHashtag />
               Explore
             </Button>
           </li>
-          <li className="my-4">
+          <li>
             <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
               <HiOutlineGlobeAlt />
               Language
             </Button>
           </li>
-          <li className="mt-4 mb-1">
+          <li>
             <Button className="text-md min-w-48" type="primary" onClick={() => navigate('/create')}>
               Create
             </Button>
@@ -39,7 +41,7 @@ const Sidebar = ({ side }) => {
     return (
       <>
         <div className="sidebar relative h-full text-left flex flex-col w-3/6">
-          <ul>
+          <ul className='space-y-3'>
             {/* <li className="mb-2">
               <div className="mt-auto">
                 <Button className="min-w-full" type="primary">
@@ -47,14 +49,14 @@ const Sidebar = ({ side }) => {
                 </Button>
               </div>
             </li> */}
-            <li>
+            {!isAuthenticated && !isPending && <li>
               <div className="mt-auto">
                 <Button className="min-w-full" type="primary" onClick={() => navigate('/auth/signin')}>
                   Sign In
                 </Button>
               </div>
-            </li>
-            <li className="my-4 mt-5">
+            </li>}
+            <li>
               <div className="relative ">
                 <label htmlFor="Search" className="sr-only">
                   Search
