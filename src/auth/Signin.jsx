@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Login as loginApi } from '../services/apiAuth';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLogin } from './useLogin';
 
 const SignIn = () => {
@@ -15,7 +13,6 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!user.email || !user.password) return;
-
     login(user); 
   }
 

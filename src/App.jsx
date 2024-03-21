@@ -7,8 +7,7 @@ import SignIn from './auth/Signin';
 import AuthLayout from './auth/AuthLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { useEffect } from 'react';
-import { getCurrentUser } from './services/apiAuth';
+import Profile from './Pages/Profile';
 
 function App() {
   const queryClient = new QueryClient({
@@ -32,7 +31,10 @@ function App() {
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/auth/signin" element={<SignIn />} />
 
-          <Route element={<AuthLayout />}></Route>
+          <Route element={<AuthLayout />}>
+            <Route path="/edit-profile/:id" element={<Profile />} />
+            
+          </Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

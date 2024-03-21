@@ -5,7 +5,7 @@ import { useUser } from '../auth/useUser';
 
 const Sidebar = ({ side }) => {
   const navigate = useNavigate();
-  const {isAuthenticated, isPending} = useUser();
+  const {isAuthenticated, isPending, user } = useUser();
 
   if (side === 'left') {
     return (
@@ -49,7 +49,7 @@ const Sidebar = ({ side }) => {
                 </Button>
               </div>
             </li> */}
-            {!isAuthenticated && !isPending && <li>
+            {!isAuthenticated && !isPending && !user && <li>
               <div className="mt-auto">
                 <Button className="min-w-full" type="primary" onClick={() => navigate('/auth/signin')}>
                   Sign In

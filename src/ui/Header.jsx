@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useUser } from "../auth/useUser";
-import { Logout } from "../services/apiAuth";
 import { useLogout } from "../auth/useLogout";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [hide, isHide] = useState(false);
@@ -14,7 +14,7 @@ const Header = () => {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
-            <a className="block text-teal-600" href="#">
+            <Link className="block text-teal-600" to="/">
               <span className="sr-only">Home</span>
               <svg className="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -22,7 +22,7 @@ const Header = () => {
                   fill="currentColor"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
 
           <div className="hidden md:block">
@@ -96,8 +96,8 @@ const Header = () => {
               <div className={`${!hide ? "hidden" : ""} absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <div className="py-1" role="none">
                   {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                  <Link to="/edit-profile/1212" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-1">Edit Profile</Link>
                   <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0">Account settings</a>
-                  <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-1">Support</a>
                   <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-2">License</a>
                   <button type="submit" className="text-gray-700 block w-full px-4 py-2 text-left text-sm flex" role="menuitem" onClick={logout}>
                     {isPending && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

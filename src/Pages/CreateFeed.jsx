@@ -2,6 +2,7 @@ import { HiMiniArrowLeft } from 'react-icons/hi2';
 import Button from '../ui/Button';
 import { BiSolidPaperPlane } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../ui/BackButton';
 
 const CreateFeed = () => {
   const navigate = useNavigate();
@@ -11,10 +12,7 @@ const CreateFeed = () => {
       <div className="max-w-5xl m-auto py-5">
         <div className="bg-green-50 rounded-xl">
           <div className="flex items-center justify-between p-5">
-            <button className="flex items-center space-x-1 transition active:scale-90" onClick={() => navigate(-1)}>
-              <HiMiniArrowLeft size={25} className="fill-gray-800" /> <img src="https://doodleipsum.com/700/avatar-2?i=29a11c4444c4c0d795d3aba1c0ce37d0" alt="" className="size-12 rounded-full" />
-            </button>
-
+            <BackButton type="image" />
             <Button type="primary" className="flex items-center gap-2">
               <BiSolidPaperPlane /> Post
             </Button>
