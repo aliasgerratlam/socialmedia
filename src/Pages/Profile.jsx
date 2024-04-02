@@ -1,28 +1,52 @@
-import React, { useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import BackButton from '../ui/BackButton'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import { useUser } from '../auth/useUser'
 
 const Profile = () => {
-    const [image, setImage] = useState(null);
-    const {user} = useUser();
-    const {email, firstname, lastname} = user.user_metadata;
+    const noImg = "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
+    const [image, setImage] = useState(noImg);
+    const imageInput = useRef(null);
+
+    const {user, isPending} = useUser();
+    const {email, firstname, lastname} = user?.user_metadata || {};
 
     const [userData, setUserData] = useState({
-        firstname,
-        lastname,
+        firstname: user?.user_metadata.firstname || "",
+        lastname: user?.user_metadata.lastname || "",
         dob: "",
         profession: "",
         bio: "",
         gender: "",
     });
 
+    useMemo(() => {
+        if(user) {
+            setUserData({
+                firstname: user?.user_metadata.firstname || "",
+                lastname: user?.user_metadata.lastname || "",
+                dob: "",
+                profession: "",
+                bio: "",
+                gender: "",
+            })
+        }
+    }, [user]);
+
+    const handleImageChange = (e) => {
+        let image = e.target.files[0];
+        if (!image) setImage(noImg);
+        else setImage(URL.createObjectURL(image));
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!userData.fullname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
+        if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
         console.log('userData', userData, image)
     }
+
+    if(isPending) return <p>Loading...</p>
 
   return (
     <div className="bg-gray-200 min-h-screen">
@@ -33,22 +57,22 @@ const Profile = () => {
                     
                     <form className='mt-8' onSubmit={handleSubmit}>
                         <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Bordered avatar" />
+                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src={image} alt="Bordered avatar" />
 
                             <div className="flex flex-col space-y-5 sm:ml-8">
-                                <input type='file' accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
-                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
+                                <input className='hidden' ref={imageInput} type='file' accept="image/*" onChange={handleImageChange} />
+                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200" onClick={() => imageInput.current.click()}>
                                     Change picture
                                 </button>
-                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
+                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200">
                                     Delete picture
                                 </button>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 items-center mt-8 sm:mt-14 text-[#202142]">
-                            <Input label="First name" type="text" placeholder="John" value={userData.firstname} onChange={e => setUserData({ ...userData, firstname: e.target.value })} />
-                            <Input label="Last name" type="text" placeholder="Doe" value={userData.lastname} onChange={e => setUserData({ ...userData, lastname: e.target.value })} />
+                            <Input label="First name" type="text" placeholder="John" defaultValue={userData.firstname || ""} onChange={e => setUserData({ ...userData, firstname: e.target.value })} />
+                            <Input label="Last name" type="text" placeholder="Doe" defaultValue={userData.lastname || ""} onChange={e => setUserData({ ...userData, lastname: e.target.value })} />
                             <Input label="Email" type="email" placeholder="Johndoe@example.com" defaultValue={email} disabled />
                             <Input label="Date of Birth" type="date" value={userData.dob} onChange={e => setUserData({ ...userData, dob: e.target.value })} />
                             <Input label="Profession" type="text" placeholder="Software Developer" value={userData.profession} onChange={e => setUserData({ ...userData, profession: e.target.value })} />
