@@ -6,11 +6,11 @@ import { useUser } from '../auth/useUser'
 
 const Profile = () => {
     const noImg = "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
-    const [image, setImage] = useState(noImg);
+    // const [image, setImage] = useState(noImg);
     const imageInput = useRef(null);
 
     const {user, isPending} = useUser();
-    const {email, firstname, lastname} = user?.user_metadata || {};
+    const {email} = user?.user_metadata || {};
 
     const [userData, setUserData] = useState({
         firstname: user?.user_metadata.firstname || "",
@@ -19,17 +19,18 @@ const Profile = () => {
         profession: "",
         bio: "",
         gender: "",
+        avatar: noImg,
     });
+
+    console.log('user', user)
 
     useMemo(() => {
         if(user) {
             setUserData({
                 firstname: user?.user_metadata.firstname || "",
                 lastname: user?.user_metadata.lastname || "",
-                dob: "",
-                profession: "",
-                bio: "",
-                gender: "",
+                avatar: noImg,
+                ...user?.user_metadata
             })
         }
     }, [user]);
@@ -37,13 +38,13 @@ const Profile = () => {
     const handleImageChange = (e) => {
         let image = e.target.files[0];
         if (!image) setImage(noImg);
-        else setImage(URL.createObjectURL(image));
+        else setUserData({avatar: URL.createObjectURL(image)});
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
-        console.log('userData', userData, image)
+        // if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
+        console.log('userData', userData)
     }
 
     if(isPending) return <p>Loading...</p>
@@ -57,7 +58,7 @@ const Profile = () => {
                     
                     <form className='mt-8' onSubmit={handleSubmit}>
                         <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src={image} alt="Bordered avatar" />
+                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src={userData.avatar} alt="Bordered avatar" />
 
                             <div className="flex flex-col space-y-5 sm:ml-8">
                                 <input className='hidden' ref={imageInput} type='file' accept="image/*" onChange={handleImageChange} />

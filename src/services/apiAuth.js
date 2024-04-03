@@ -16,8 +16,16 @@ export const getCurrentUser = async () => {
   return data?.user;
 }
 
-export const updateUser = async (user) => {
-  const { data, error } = await supabase.auth.updateUser(user);
+export const updateUser = async ({firstname, lastname, dob, bio, gender, profession}) => {
+  let updateUser;
+  if(firstname) updateUser = {data: {firstname}};
+  if(lastname) updateUser = {data: {lastname}};
+  if(dob) updateUser = {data: {dob}};
+  if(bio) updateUser = {data: {bio}};
+  if(gender) updateUser = {data: {gender}};
+  if(profession) updateUser = {data: {profession}};
+
+  const { data, error } = await supabase.auth.updateUser(updateUser);
   if(error) throw new Error(error.message);
   return data;
 }
