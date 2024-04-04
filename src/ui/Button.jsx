@@ -1,5 +1,5 @@
 // eslint-disable-next-line react/prop-types
-const Button = ({ children, className, type, onClick }) => {
+const Button = ({ children, className, type, onClick, otherProps }) => {
   const base = 'bg-indigo-600 inline-block rounded-full text-lg tracking-normal text-white font-semibold py-2 px-5 transition active:scale-95 hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-700';
 
   const style = {

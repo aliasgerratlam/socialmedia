@@ -3,13 +3,14 @@ import BackButton from '../ui/BackButton'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import { useUser } from '../auth/useUser'
+import { useUpdateUser } from '../auth/useUpdateUser'
 
 const Profile = () => {
     const noImg = "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
-    // const [image, setImage] = useState(noImg);
     const imageInput = useRef(null);
-
+    
     const {user, isPending} = useUser();
+    const {updateUser, isPending: isUpdatePending} = useUpdateUser();
     const {email} = user?.user_metadata || {};
 
     const [userData, setUserData] = useState({
@@ -22,7 +23,7 @@ const Profile = () => {
         avatar: noImg,
     });
 
-    console.log('user', user)
+    // console.log('user', user)
 
     useMemo(() => {
         if(user) {
@@ -38,13 +39,14 @@ const Profile = () => {
     const handleImageChange = (e) => {
         let image = e.target.files[0];
         if (!image) setImage(noImg);
-        else setUserData({avatar: URL.createObjectURL(image)});
+        else setUserData({avatar: image});
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
-        console.log('userData', userData)
+        console.log(userData)
+        updateUser(userData);
     }
 
     if(isPending) return <p>Loading...</p>
@@ -75,18 +77,18 @@ const Profile = () => {
                             <Input label="First name" type="text" placeholder="John" defaultValue={userData.firstname || ""} onChange={e => setUserData({ ...userData, firstname: e.target.value })} />
                             <Input label="Last name" type="text" placeholder="Doe" defaultValue={userData.lastname || ""} onChange={e => setUserData({ ...userData, lastname: e.target.value })} />
                             <Input label="Email" type="email" placeholder="Johndoe@example.com" defaultValue={email} disabled />
-                            <Input label="Date of Birth" type="date" value={userData.dob} onChange={e => setUserData({ ...userData, dob: e.target.value })} />
-                            <Input label="Profession" type="text" placeholder="Software Developer" value={userData.profession} onChange={e => setUserData({ ...userData, profession: e.target.value })} />
+                            <Input label="Date of Birth" type="date" defaultValue={userData.dob || ""} onChange={e => setUserData({ ...userData, dob: e.target.value })} />
+                            <Input label="Profession" type="text" placeholder="Software Developer" value={userData.profession || ""} onChange={e => setUserData({ ...userData, profession: e.target.value })} />
                             <Input label="Gender" type="select" value={userData.gender} onChange={e => setUserData({ ...userData, gender: e.target.value })}>
                                 <option value="">Select your gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </Input>
-                            <Input label="Bio" type="textarea" placeholder="Write something about yourself" className="col-span-2" value={userData.bio} onChange={e => setUserData({ ...userData, bio: e.target.value })} />
+                            <Input label="Bio" type="textarea" placeholder="Write something about yourself" className="col-span-2" value={userData.bio || ""} onChange={e => setUserData({ ...userData, bio: e.target.value })} />
 
                             <div className="flex justify-end">
-                                <Button type="primary">Save</Button>
+                                <Button type="primary" disabled={isUpdatePending}>Save</Button>
                             </div>
                         </div>
                     </form>

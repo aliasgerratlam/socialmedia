@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, {supabaseUrl} from "./supabase";
 
 export const Login = async (email, password) => {
     let { data, error } = await supabase.auth.signInWithPassword(email, password);
@@ -16,18 +16,33 @@ export const getCurrentUser = async () => {
   return data?.user;
 }
 
-export const updateUser = async ({firstname, lastname, dob, bio, gender, profession}) => {
+export const updateUser = async ({firstname, lastname, dob, bio, gender, profession, avatar}) => {
   let updateUser;
-  if(firstname) updateUser = {data: {firstname}};
-  if(lastname) updateUser = {data: {lastname}};
-  if(dob) updateUser = {data: {dob}};
-  if(bio) updateUser = {data: {bio}};
-  if(gender) updateUser = {data: {gender}};
-  if(profession) updateUser = {data: {profession}};
+  if(firstname || lastname || dob || bio || gender || profession || avatar) updateUser = {data: {firstname, lastname, dob, bio, gender, profession, avatar}}
+
+  // if(firstname) updateUser = {data: {firstname}};
+  // if(lastname) updateUser = {data: {lastname}};
+  // if(dob) updateUser = {data: {dob}};
+  // if(bio) updateUser = {data: {bio}};
+  // if(gender) updateUser = {data: {gender}};
+  // if(profession) updateUser = {data: {profession}};
 
   const { data, error } = await supabase.auth.updateUser(updateUser);
   if(error) throw new Error(error.message);
-  return data;
+  if(!avatar) return data;
+
+  const filename = `avatar-${data.user.id}-${new Date().getTime()}`;
+  const {error: storageError} = await supabase.storage.from('avatars').upload(filename, avatar);
+  console.log('avatar', avatar)
+
+  if(storageError) throw new Error(storageError.message);
+
+  const { data: udaptedUser, error: error2 } = await supabase.auth.updateUser({data: 
+    {avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${filename}`}
+  });
+
+  if(error2) throw new Error(error2.message);
+  return udaptedUser;
 }
 
 export const Logout = async () => {
