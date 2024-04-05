@@ -4,6 +4,7 @@ import Input from '../ui/Input'
 import Button from '../ui/Button'
 import { useUser } from '../auth/useUser'
 import { useUpdateUser } from '../auth/useUpdateUser'
+import Spinner from '../ui/Spinner'
 
 const Profile = () => {
     const noImg = "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
@@ -38,18 +39,18 @@ const Profile = () => {
 
     const handleImageChange = (e) => {
         let image = e.target.files[0];
-        if (!image) setImage(noImg);
-        else setUserData({avatar: image});
+        if (!image) setUserData({...userData, avatar: ""});
+        else setUserData({...userData, avatar: image});
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
-        console.log(userData)
         updateUser(userData);
     }
 
-    if(isPending) return <p>Loading...</p>
+    console.log('image', typeof userData.avatar, userData.avatar)
+    if(isPending) return <Spinner />
 
   return (
     <div className="bg-gray-200 min-h-screen">
@@ -60,14 +61,14 @@ const Profile = () => {
                     
                     <form className='mt-8' onSubmit={handleSubmit}>
                         <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src={userData.avatar} alt="Bordered avatar" />
+                            <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" src={userData.avatar === "" ? noImg : typeof userData.avatar === "string" ? userData.avatar : URL.createObjectURL(userData.avatar)} alt="Bordered avatar" />
 
                             <div className="flex flex-col space-y-5 sm:ml-8">
                                 <input className='hidden' ref={imageInput} type='file' accept="image/*" onChange={handleImageChange} />
                                 <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200" onClick={() => imageInput.current.click()}>
                                     Change picture
                                 </button>
-                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200">
+                                <button type="button" className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200" onClick={() => setUserData({ ...userData, avatar: "" })}>
                                     Delete picture
                                 </button>
                             </div>

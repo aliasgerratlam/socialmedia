@@ -7,7 +7,6 @@ const Header = () => {
   const [hide, isHide] = useState(false);
   const {isAuthenticated, user} = useUser();
   const {isPending, logout} = useLogout();
-  console.log(user)
 
   return (
     <header className="bg-white">
@@ -70,15 +69,15 @@ const Header = () => {
 
             {isAuthenticated && <div className="relative inline-block text-left">
               <div>
-                <button type="button" className="inline-block w-full justify-center rounded-full bg-white min-w-10 min-h-10 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 uppercase" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => isHide(prev => !prev)}>
-                  {user.user_metadata.firstname.charAt(0)}
+                <button type="button" className="flex w-full justify-center items-center rounded-full bg-white min-w-10 min-h-10 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 uppercase" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => isHide(prev => !prev)}>
+                  {user?.user_metadata?.avatar ? <img className="h-8 w-8 rounded-full" src={user?.user_metadata?.avatar} alt="Your avatar" /> : user.user_metadata.firstname.charAt(0)}
                 </button>
               </div>
 
               <div className={`${!hide ? "hidden" : ""} absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <div className="py-1" role="none">
                   {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                  <Link to="/edit-profile/1212" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-1">Edit Profile</Link>
+                  <Link to={`/edit-profile/${user?.id}`} className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-1">Edit Profile</Link>
                   <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0">Account settings</a>
                   <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-2">License</a>
                   <button type="submit" className="text-gray-700 block w-full px-4 py-2 text-left text-sm flex" role="menuitem" onClick={logout}>

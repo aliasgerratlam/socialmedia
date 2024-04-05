@@ -5,7 +5,7 @@ const Input = ({label, type, value, onChange, className, children, placeholder, 
     if(type === "select") return (
         <div className={`w-full ${className}`}>
             <label htmlFor={label} className="block text-sm font-medium text-gray-900">{label}</label>
-            <select name={label} onChange={onChange} className="mt-1 w-full rounded-md border border-gray-300 p-2 bg-white text-sm text-gray-700 h-10 shadow-sm">{children}</select>
+            <select name={label} onChange={onChange} value={value} className="mt-1 w-full rounded-md border border-gray-300 p-2 bg-white text-sm text-gray-700 h-10 shadow-sm">{children}</select>
         </div>
     ) 
     else if (type === "textarea") return (

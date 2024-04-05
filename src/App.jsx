@@ -8,6 +8,7 @@ import AuthLayout from './auth/AuthLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Profile from './Pages/Profile';
+import ProtectedRoute from './Pages/ProtectedRoute';
 
 function App() {
   const queryClient = new QueryClient({
@@ -31,9 +32,8 @@ function App() {
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/auth/signin" element={<SignIn />} />
 
-          <Route element={<AuthLayout />}>
+          <Route element={<ProtectedRoute><AuthLayout /></ProtectedRoute>}>
             <Route path="/edit-profile/:id" element={<Profile />} />
-            
           </Route>
         </Routes>
       </BrowserRouter>
