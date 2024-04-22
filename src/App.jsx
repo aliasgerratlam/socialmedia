@@ -18,6 +18,35 @@ function App() {
       },
     }
   });
+
+  // const user = [
+  //   {
+  //     userId,
+  //     username: "johndoe",
+  //     name: "John Doe",
+  //     bio: "Hello, I'm John Doe. I'm a software developer from India. I love creating new things.",
+  //     profile_image: "",
+  //     createdAt: "2022-01-01T00:00:00.000Z",
+  //     posts: [],
+  //     followers: [],
+  //     following: [],
+  //   }
+  // ]
+
+  // const posts = [
+  //   {
+  //     postId,
+  //     username: "johndoe",
+  //     name: "John Doe",
+  //     profile_image: "",
+  //     createdAt: "2022-01-01T00:00:00.000Z",
+  //     content: "Hello, I'm John Doe. I'm a software developer from India. I love creating new things.",
+  //     media: [],
+  //     likes: [],
+  //     comments: [],
+  //   }
+  // ]
+  
   
   return (
     <QueryClientProvider client={queryClient}>

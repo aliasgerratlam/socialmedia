@@ -24,7 +24,7 @@ const Profile = () => {
         avatar: noImg,
     });
 
-    // console.log('user', user)
+    console.log('user', user)
 
     useMemo(() => {
         if(user) {

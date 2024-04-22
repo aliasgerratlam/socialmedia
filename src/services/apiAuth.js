@@ -19,7 +19,6 @@ export const getCurrentUser = async () => {
 export const updateUser = async ({firstname, lastname, dob, bio, gender, profession, avatar}) => {
   let updateUser;
   if(firstname || lastname || dob || bio || gender || profession || avatar) updateUser = {data: {firstname, lastname, dob, bio, gender, profession, avatar}}
-  console.log('avatar', avatar)
 
   const { data, error } = await supabase.auth.updateUser(updateUser);
   if(error) throw new Error(error.message);
@@ -27,7 +26,6 @@ export const updateUser = async ({firstname, lastname, dob, bio, gender, profess
 
   const filename = `avatar-${data.user.id}-${new Date().getTime()}`;
   const {error: storageError} = await supabase.storage.from('avatars').upload(filename, avatar);
-  console.log('avatar', avatar)
 
   if(storageError) throw new Error(storageError.message);
 

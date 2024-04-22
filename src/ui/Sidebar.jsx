@@ -12,27 +12,16 @@ const Sidebar = ({ side }) => {
       <div className="sidebar relative h-full text-right flex flex-col">
         <ul className='space-y-3'>
           <li>
-            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
-              <HiOutlineHome />
-              Feed
-            </Button>
+            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary"><HiOutlineHome />Feed</Button>
           </li>
           <li>
-            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
-              <HiOutlineHashtag />
-              Explore
-            </Button>
+            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary"><HiOutlineHashtag />Explore</Button>
           </li>
           <li>
-            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary">
-              <HiOutlineGlobeAlt />
-              Language
-            </Button>
+            <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary"><HiOutlineGlobeAlt />Language</Button>
           </li>
           <li>
-            <Button className="text-md min-w-48" type="primary" onClick={() => navigate('/create')}>
-              Create
-            </Button>
+            <Button className="text-md min-w-48" type="primary" onClick={() => navigate('/create')}>Create</Button>
           </li>
         </ul>
       </div>

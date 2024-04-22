@@ -1,6 +1,13 @@
 import { HiMiniUserCircle, HiOutlineHandThumbUp, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
+import { usePosts } from './usePosts';
+import { useUser } from '../../auth/useUser';
 
 const Feed = () => {
+  const {data} = usePosts();
+  const {data:user} = useUser();
+  console.log('data', data , user)
+
+
   return (
     <div className="bg-white border rounded-2xl my-5">
       <div className="flex items-start justify-between p-4">
