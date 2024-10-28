@@ -24,8 +24,6 @@ const Profile = () => {
         avatar: noImg,
     });
 
-    console.log('user', user)
-
     useMemo(() => {
         if(user) {
             setUserData({
@@ -45,11 +43,9 @@ const Profile = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if(!userData.firstname || !userData.lastname || !userData.dob || !userData.profession || !userData.bio || !userData.gender) return;
         updateUser(userData);
     }
 
-    console.log('image', typeof userData.avatar, userData.avatar)
     if(isPending) return <Spinner />
 
   return (

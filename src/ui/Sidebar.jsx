@@ -26,7 +26,9 @@ const Sidebar = ({ side }) => {
         </ul>
       </div>
     );
-  } else {
+  } 
+  
+  if (side === 'right') {
     return (
       <>
         <div className="sidebar relative h-full text-left flex flex-col w-3/6">
