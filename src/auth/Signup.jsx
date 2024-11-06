@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { useSignup } from './useSignup';
 
 const Signup = () => {
-  const [user, setUser] = useState({ email: '', password: '', confirmPass: "", firstname: '', lastname: '' });
+  const [user, setUser] = useState({ email: '', password: '', confirmPass: "", firstname: '', lastname: '', username: '' });
   const {signup, isPending} = useSignup();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if(!user.email || !user.password || !user.confirmPass || !user.firstname || !user.lastname) return;
+    if(!user.email || !user.password || !user.confirmPass || !user.firstname || !user.lastname || !user.username) return;
     if(user.password !== user.confirmPass) return;
     signup(user);
   }
@@ -44,7 +44,15 @@ const Signup = () => {
                 <input type="text" id="LastName" name="last_name" value={user.lastname} onChange={(e) => setUser({ ...user, lastname: e.target.value })} className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
               </div>
 
-              <div className="col-span-6">
+              <div className="col-span-6 sm:col-span-3">
+                <label htmlFor="Username" className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+
+                <input type="text" id="Username" name="username" value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })} className="mt-1 w-full rounded-md border border-gray-300 p-3 bg-white text-sm text-gray-700 h-10 shadow-sm" />
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="Email" className="block text-sm font-medium text-gray-700">
                   {' '}
                   Email{' '}

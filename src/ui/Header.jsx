@@ -70,7 +70,7 @@ const Header = () => {
             {isAuthenticated && <div className="relative inline-block text-left">
               <div>
                 <button type="button" className="flex w-full justify-center items-center rounded-full bg-white min-w-10 min-h-10 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 uppercase" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => isHide(prev => !prev)}>
-                  {user?.user_metadata?.avatar ? <img className="h-8 w-8 rounded-full" src={user?.user_metadata?.avatar} alt="Your avatar" /> : user.user_metadata.firstname.charAt(0)}
+                  {user?.user_metadata?.avatar ? <img className="h-8 w-8 rounded-full" src={user?.user_metadata?.avatar} alt="Your avatar" /> : user.user_metadata?.firstname?.charAt(0)}
                 </button>
               </div>
 

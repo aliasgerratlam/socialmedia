@@ -6,7 +6,7 @@ export const useSignup = () => {
     const navigate = useNavigate();
 
     const {mutate: signup, isPending} = useMutation({
-        mutationFn: (user) => signupApi({email: user.email, password: user.password, firstname: user.firstname, lastname: user.lastname}),
+        mutationFn: (user) => signupApi({email: user.email, password: user.password, firstname: user.firstname, lastname: user.lastname, username: user.username}),
         onSuccess: () => {
             navigate("/", { replace: true });
         }
