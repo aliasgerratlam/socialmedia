@@ -1,7 +1,7 @@
 import supabase from "./supabase"
 
-export const getPosts = async () => {
-    const { data, error } = await supabase.from('tweets').select('*');
+export const getTweets = async () => {
+    const { data, error } = await supabase.from('tweets').select(`*, profiles(*)`);
 
     if(error) {
         console.error(error);

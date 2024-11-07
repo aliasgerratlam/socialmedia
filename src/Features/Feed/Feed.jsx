@@ -1,29 +1,7 @@
 import { HiMiniUserCircle, HiOutlineHandThumbUp, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
-import { usePosts } from './usePosts';
-import { useUser } from '../../auth/useUser';
-import supabase from '../../services/supabase';
-import { useEffect } from 'react';
 
-const Feed = () => {
-  // const {data} = usePosts();
-  // const {data:user} = useUser();
-  
-  // console.log('data', data , user)
-
-  // useEffect(() => {
-  //   async function getUserDetails(user_id) {
-  //     const { data, error } = await supabase
-  //         .from('auth.users')  // Directly querying the users table
-  //         .select('*')
-  //         .eq('id', user_id);
-  
-  //     if (error) {
-  //         console.error("Error retrieving user details:", error);
-  //         return null;
-  //     }
-  
-  //     return data;
-  // }
+const Feed = ({captions}) => {
+  console.log('tweet', tweet)
 
   return (
     <div className="bg-white border rounded-2xl my-5">

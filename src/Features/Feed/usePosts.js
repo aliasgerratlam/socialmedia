@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "../../services/apiPosts";
+import { getTweets } from "../../services/apiPosts";
 
-export const usePosts = () => {
+export const useTweets = () => {
     const { isPending, data, error } = useQuery({
-        queryKey: ["posts"],
-        queryFn: getPosts,
+        queryKey: ["tweets"],
+        queryFn: getTweets,
     });
     return { isPending, data, error };
 }
