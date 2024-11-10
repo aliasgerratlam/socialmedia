@@ -1,21 +1,17 @@
 import Feed from '../Features/Feed/Feed';
 import CreateFeed from '../Features/Feed/Create';
-import { useTweets } from '../Features/Feed/usePosts';
-import { useMemo, useState } from 'react';
+import { useTweets } from '../Features/Feed/useGetTweets';
+import Spinner from '../ui/Spinner'
 
 const Home = () => {
   const { data, error, isPending } = useTweets();
-  const [tweets, setTweets] = useState();
+  const fetchData = data ? [...data].reverse() : [];
 
-  // useMemo(() => {
-  //   if (data) setTweets(data);
-  // }, [data]);
-  // console.log(data);
-
+  if(isPending) <Spinner />
   return (
     <>
       <CreateFeed />
-      {data?.map((tweet, i) => (
+      {fetchData?.map((tweet, i) => (
         <div key={i} className="[&>*:first-child]:mt-4">
           <Feed tweet={tweet} />
         </div>

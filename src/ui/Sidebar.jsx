@@ -21,7 +21,7 @@ const Sidebar = ({ side }) => {
             <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary"><HiOutlineGlobeAlt />Language</Button>
           </li>
           <li>
-            <Button className="text-md min-w-48" type="primary" onClick={() => navigate('/create')}>Create</Button>
+            <Button className="text-md min-w-48" type="primary" onClick={() => navigate(isAuthenticated ? '/create' : '/auth/signin')}>Create</Button>
           </li>
         </ul>
       </div>
