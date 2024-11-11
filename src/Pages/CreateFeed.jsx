@@ -44,8 +44,6 @@ const CreateFeed = () => {
     setTweets({...tweets, images: null});
   }
 
-  console.log('tweets :>> ', tweets);
-
   if(isPending) return <Spinner />
   return (
     <div className="bg-gray-200 min-h-screen">
