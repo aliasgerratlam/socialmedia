@@ -6,7 +6,7 @@ import { useUser } from '../auth/useUser'
 import { useUpdateUser } from '../auth/useUpdateUser'
 import Spinner from '../ui/Spinner'
 
-const Profile = () => {
+const ProfileEdit = () => {
     const noImg = "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
     const imageInput = useRef(null);
     
@@ -98,4 +98,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default ProfileEdit

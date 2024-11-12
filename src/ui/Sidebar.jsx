@@ -11,6 +11,11 @@ const Sidebar = ({ side }) => {
     return (
       <div className="sidebar relative h-full text-right flex flex-col">
         <ul className='space-y-3'>
+          {isAuthenticated && <li>
+            <Button to={`/profile/${user.user_metadata.username}`} className="text-md flex justify-end items-center gap-2 ml-auto capitalize max-w-fit" type="secondary">
+              <img className='w-8 h-8 object-cover rounded-full' src={user?.user_metadata.avatar} alt="" /> {`${user?.user_metadata.firstname} ${user?.user_metadata.lastname}`}
+            </Button>
+          </li>}
           <li>
             <Button className="text-md flex justify-between items-center gap-2 ml-auto" type="secondary"><HiOutlineHome />Feed</Button>
           </li>

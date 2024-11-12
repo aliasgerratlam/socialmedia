@@ -6,8 +6,9 @@ import Signup from './auth/Signup';
 import SignIn from './auth/Signin';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import Profile from './Pages/Profile';
 import ProtectedRoute from './Pages/ProtectedRoute';
+import ProfileEdit from './Pages/ProfileEdit';
+import UserProfile from './Pages/UserProfile';
 
 function App() {
   const queryClient = new QueryClient({
@@ -55,13 +56,17 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Home />} />
+
+            <Route element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
+              <Route path="/profile/:username" element={<UserProfile />} />
+            </Route>
           </Route>
           <Route path="/create" element={<CreateFeed />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/auth/signin" element={<SignIn />} />
-
+          
           <Route element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
-            <Route path="/edit-profile/:id" element={<Profile />} />
+            <Route path="/edit-profile/:id" element={<ProfileEdit />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -14,7 +14,7 @@ const Home = () => {
       {fetchData?.map((tweet, i) => (
         <div key={i} className="[&>*:first-child]:mt-4">
           <Feed tweet={tweet} />
-        </div>
+        </div> 
       ))}
     </>
   );
