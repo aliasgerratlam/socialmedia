@@ -9,6 +9,16 @@ export const getTweets = async () => {
     return data;
 };
 
+export const getProfiles = async () => {
+    let { data, error } = await supabase.from('profiles').select('*');
+    
+    if(error) {
+        throw new Error("Profiles could not be fetched");
+    }
+
+    return data;
+}
+
 export const InsertTweets = async ({user_id, captions, images, modified_at}) => {
     const { data: insertData, error: insertError } = await supabase.from('tweets').insert([{ user_id, captions, images, modified_at },]).select();
     if(insertError) throw new Error(insertError.message);
@@ -18,7 +28,6 @@ export const InsertTweets = async ({user_id, captions, images, modified_at}) => 
     const {error: storageError} = await supabase.storage.from('tweet_image').upload(filename, images);
     
     if(storageError) throw new Error(storageError.message);
-    console.log('insertData', insertData[0].id)
     
     const { data, error } = await supabase.from('tweets').update({ images: `${supabaseUrl}/storage/v1/object/public/tweet_image/${filename}` }).eq('id', insertData[0].id).select();
     console.log('first', `${supabaseUrl}/storage/v1/object/public/tweet_image/${filename}`, data, insertData.user_id)

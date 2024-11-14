@@ -1,25 +1,30 @@
-import React from 'react'
+import React from 'react';
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { useUser } from '../auth/useUser';
+import { useTweets } from '../Features/Feed/useGetTweets';
+import { useLocation } from 'react-router-dom';
+import useGetProfiles from '../Features/Feed/useGetProfiles';
 
 const UserProfile = () => {
-  return (
+    const { data: tweets, error, isPending } = useTweets();
+    const { data: profiles } = useGetProfiles();
+    const location = useLocation();
+    
+    const segments = location.pathname.split('/');
+    const [profile = {}] = profiles?.filter((user) => user?.username === segments[segments.length -1]) || [];
+    // const [tweet = {}] = tweets?.filter((tweet) => user?.username === segments[segments.length -1]) || [];
+
+    return (
     <div>
-        <div>
-            <div className="flex justify-start">
-                <div className="px-4 py-2 mx-2">
-                    <a href="" className=" text-2xl font-medium rounded-full text-blue-400 hover:bg-gray-800 hover:text-blue-300 float-right">
-                        <svg className="m-2 h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <g>
-                                <path d="M20 11H7.414l4.293-4.293c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0l-6 6c-.39.39-.39 1.023 0 1.414l6 6c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L7.414 13H20c.553 0 1-.447 1-1s-.447-1-1-1z">
-                                </path>
-                            </g>
-                        </svg>
-                    </a>
-                </div>
-                <div className="mx-2">
-                    <h2 className="mb-0 text-xl font-bold text-white">ℜ??????ℜ??????.dev</h2>
-                    <p className="mb-0 w-48 text-xs text-gray-400">9,416 Tweets</p>
-                </div>
+        <div className="py-3 flex justify-start items-center bg-slate-200">
+            <div className="mx-2">
+                <button to="/" className="text-lg inline-block font-medium rounded-full bg-transparent hover:bg-gray-300 w-10 h-10 text-center" type="basic"><FaArrowLeftLong className='text-gray-900 mx-auto' /></button>
             </div>
+            <div className="mx-2">
+                <h2 className="mb-0 text-xl font-bold text-gray-900 capitalize">{`${profile.firstname} ${profile.lastname}`} <small className='text-xs font-normal lowercase'>(@{profile.username})</small></h2>
+                {/* <p className="mb-0 w-48 text-xs text-gray-900">{userTweet?.length} Tweets</p> */}
+            </div>
+        </div>
 
             <hr className="border-gray-800" />
 
@@ -64,7 +69,6 @@ const UserProfile = () => {
                 </div>
             </div>
             <hr className="border-gray-800" />
-        </div>
     </div>
   )
 }

@@ -14,7 +14,7 @@ const AppLayout = () => {
         <aside className="max-h-[50rem] overflow-hidden py-4 px-8">
           {!isProfilPage && <Sidebar side="left" />}
         </aside>
-        <main className="bg-slate-50 min-h-screen p-4">
+        <main className="bg-slate-50 min-h-screen">
           <Outlet />
         </main>
         <aside className="max-h-[50rem] overflow-hidden py-4 px-6">
