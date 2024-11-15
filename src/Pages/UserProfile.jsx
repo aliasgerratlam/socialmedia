@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useUser } from '../auth/useUser';
 import { useTweets } from '../Features/Feed/useGetTweets';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useGetProfiles from '../Features/Feed/useGetProfiles';
+import Feed from '../Features/Feed/Feed';
 
 const UserProfile = () => {
     const { data: tweets, error, isPending } = useTweets();
     const { data: profiles } = useGetProfiles();
     const location = useLocation();
+    const navigation = useNavigate()
     
-    const segments = location.pathname.split('/');
-    const [profile = {}] = profiles?.filter((user) => user?.username === segments[segments.length -1]) || [];
-    // const [tweet = {}] = tweets?.filter((tweet) => user?.username === segments[segments.length -1]) || [];
+    const profile = useMemo(() => {
+        const segments = location.pathname.split('/');
+        return profiles?.find((user) => user?.username === segments[segments.length - 1]) || {};
+    }, [profiles, location.pathname]);
+
+    const tweetsListing = useMemo(() => {
+        return tweets?.filter((tweet) => tweet?.user_id === profile?.id) || [];
+    }, [tweets, profile?.id]);
+
+    const handleBack = e => {
+        e.preventDefault();
+        navigation(-1);
+    }
 
     return (
     <div>
-        <div className="py-3 flex justify-start items-center bg-slate-200">
+        <div className="py-3 flex justify-start items-center bg-gray-500">
             <div className="mx-2">
-                <button to="/" className="text-lg inline-block font-medium rounded-full bg-transparent hover:bg-gray-300 w-10 h-10 text-center" type="basic"><FaArrowLeftLong className='text-gray-900 mx-auto' /></button>
+                <button onClick={handleBack} className="text-lg inline-block font-medium rounded-full bg-transparent hover:bg-gray-600 w-10 h-10 text-center" type="basic"><FaArrowLeftLong className='text-gray-100 mx-auto' /></button>
             </div>
             <div className="mx-2">
-                <h2 className="mb-0 text-xl font-bold text-gray-900 capitalize">{`${profile.firstname} ${profile.lastname}`} <small className='text-xs font-normal lowercase'>(@{profile.username})</small></h2>
-                {/* <p className="mb-0 w-48 text-xs text-gray-900">{userTweet?.length} Tweets</p> */}
+                <h2 className="mb-0 text-xl font-bold text-gray-100 capitalize">{`${profile.firstname} ${profile.lastname}`}</h2>
+                <small className='text-gray-100 text-xs font-normal lowercase'>@{profile.username}</small>
             </div>
         </div>
 
@@ -31,9 +43,8 @@ const UserProfile = () => {
             <div className="w-full bg-cover bg-no-repeat bg-center" style={{height: '200px', background: 'url(https://pbs.twimg.com/profile_banners/2161323234/1585151401/600x200)'}}>
                 <img className="opacity-0 w-full h-full" src="https://pbs.twimg.com/profile_banners/2161323234/1585151401/600x200" alt="" />
             </div>
-            <div className="p-4">
+            <div className="bg-gray-50 p-4">
                 <div className="relative flex w-full">
-                    
                     <div className="flex flex-1">
                         <div>
                             <div className="md rounded-full relative avatar w-32 h-32">
@@ -69,6 +80,10 @@ const UserProfile = () => {
                 </div>
             </div>
             <hr className="border-gray-800" />
+
+            <div className='mx-5'>
+                {tweetsListing.map((tweet, index) => <Feed key={index} tweet={tweet} />)}
+            </div>
     </div>
   )
 }
