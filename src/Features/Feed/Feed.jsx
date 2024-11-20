@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { HiMiniUserCircle, HiOutlineHandThumbUp, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
+import { Link } from 'react-router-dom';
 
 const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstname, lastname, username}}}) => {
   const postDate = moment().diff(moment(created_at), 'hours') < 24 ? moment(created_at).fromNow() : moment(created_at).format("MMMM Do YYYY, h:mm A");
@@ -10,8 +11,8 @@ const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstnam
         <div className="flex items-center gap-2 cursor-pointer">
           <img src={avatar} alt={username} className="size-14 rounded-full object-cover" />
           <div>
-            <h3 className="text-lg font-semibold capitalize">{`${firstname} ${lastname}`}</h3>
-            <div className="text-xs text-gray-500">@{`${username}`}</div>
+            <h3 className="text-lg font-semibold capitalize"><Link to={`/profile/${username}`}>{`${firstname} ${lastname}`}</Link></h3>
+            <Link to={`/profile/${username}`} className="text-xs text-gray-500">@{`${username}`}</Link>
           </div>
         </div>
         <div className="text-sm text-gray-500 font-regular">{postDate}</div>
