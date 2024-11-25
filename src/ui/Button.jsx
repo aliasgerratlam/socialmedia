@@ -13,12 +13,12 @@ const Button = ({ children, className, type, onClick, to, otherProps }) => {
   };
 
   if(to) 
-  return <Link to={to} className={style[type]}>
+  return <Link to={to} className={style[type]} {...otherProps}>
     {children}
   </Link>
 
   return (
-    <button className={style[type]} onClick={onClick}>
+    <button className={style[type]} onClick={onClick} {...otherProps}>
       {children}
     </button>
   );

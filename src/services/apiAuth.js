@@ -1,9 +1,10 @@
 import supabase, {supabaseUrl} from "./supabase";
 
 export const Login = async (email, password) => {
-    let { data, error } = await supabase.auth.signInWithPassword(email, password);
-    if(error) throw new Error(error.message);
-    return data;
+  let { data, error } = await supabase.auth.signInWithPassword(email, password);
+
+  if(error) throw new Error(error.message);
+  return data;
 }
 
 export const getCurrentUser = async () => {

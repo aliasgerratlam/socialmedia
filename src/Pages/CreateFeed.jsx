@@ -22,7 +22,7 @@ const CreateFeed = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!tweets.captions) return;
+    if (!tweets.captions || remainingWordLimit < 0) return;
     const newTweet = {...tweets, user_id: user ? user.id : null,};
     setTweets(newTweet);
     postTweet(newTweet);
