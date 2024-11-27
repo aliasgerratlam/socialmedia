@@ -1,12 +1,21 @@
 import moment from 'moment';
-import { HiMiniUserCircle, HiOutlineHandThumbUp, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
+import { HiMiniUserCircle, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
+import Like from '../Like/Like';
+import { useGetLike } from '../Like/useGetLikes';
 
 const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstname, lastname, username}}}) => {
   const postDate = moment().diff(moment(created_at), 'hours') < 24 ? moment(created_at).fromNow() : moment(created_at).format("MMMM Do YYYY, h:mm A");
+  const { likes, isPending } = useGetLike();
+
+  const handleSubmitLike = (e) => {
+    e.preventDefault();
+    console.log(likes(6))
+  }
 
   return (
     <div className="bg-white border rounded-2xl my-5">
+      <button onClick={handleSubmitLike}>sdsd</button>
       <div className="flex items-start justify-between p-4">
         <div className="flex items-center gap-2 cursor-pointer">
           <img src={avatar} alt={username} className="size-14 rounded-full object-cover" />
@@ -29,12 +38,7 @@ const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstnam
           <p className="text-sm text-gray-500">Write your comment...</p>
         </div>
         <div className="flex justify-start pt-1 gap-5">
-          <div className="flex items-center gap-1 py-3">
-            <button className="hover:bg-gray-100 p-1 rounded-full">
-              <HiOutlineHandThumbUp className="text-gray-500" size={22} />
-            </button>
-            <span className="text-md font-semibold text-gray-500">0</span>
-          </div>
+          <Like />
 
           <div className="flex items-center gap-1 py-3">
             <button className="hover:bg-gray-100 p-1 rounded-full">

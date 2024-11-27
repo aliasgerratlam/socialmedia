@@ -6,6 +6,7 @@ import useGetProfiles from '../Features/Feed/useGetProfiles';
 import Feed from '../Features/Feed/Feed';
 import Button from '../ui/Button';
 import { useUser } from '../auth/useUser';
+import moment from 'moment';
 
 const UserProfile = () => {
     const { user, isAuthenticated } = useUser();
@@ -70,8 +71,10 @@ const UserProfile = () => {
                 </div>
 
                 <div className=" w-full mt-3">
-                    
-                    
+                    <div className='text-end'>
+                        <p className='text-sm font-medium'>Joined in: {moment(profile.created_at).format("MMMM YYYY")}</p>
+                    </div>
+
                     <div className="mt-3">
                         <p className="text-gray-900 leading-tight mb-2">{profile?.bio}</p>
                     </div>
