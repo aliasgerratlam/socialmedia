@@ -2,20 +2,28 @@ import moment from 'moment';
 import { HiMiniUserCircle, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import Like from '../Like/Like';
-import { useGetLike } from '../Like/useGetLikes';
+import { useMemo } from 'react';
+import { useGetLike } from '../Like/useGetLike';
+import { useUser } from '../../auth/useUser';
 
-const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstname, lastname, username}}}) => {
+const Feed = ({tweet: {id, captions, images, created_at, profiles: {avatar, firstname, lastname, username}}, likesData}) => {
   const postDate = moment().diff(moment(created_at), 'hours') < 24 ? moment(created_at).fromNow() : moment(created_at).format("MMMM Do YYYY, h:mm A");
-  const { likes, isPending } = useGetLike();
+  const { handleGetLike } = useGetLike();
+  const { user } = useUser();
 
-  const handleSubmitLike = (e) => {
+  const like = useMemo(() => {
+    return (likesData || []).filter((likeData) => likeData.tweet_id === id);
+  }, [likesData, id])
+  
+  const handleSubmitLike = e => {
     e.preventDefault();
-    console.log(likes(6))
+    
+    console.log('object :>> ', user.id, id);
+    handleGetLike({userId: user.id, id});
   }
 
   return (
     <div className="bg-white border rounded-2xl my-5">
-      <button onClick={handleSubmitLike}>sdsd</button>
       <div className="flex items-start justify-between p-4">
         <div className="flex items-center gap-2 cursor-pointer">
           <img src={avatar} alt={username} className="size-14 rounded-full object-cover" />
@@ -38,7 +46,7 @@ const Feed = ({tweet: {captions, images, created_at, profiles: {avatar, firstnam
           <p className="text-sm text-gray-500">Write your comment...</p>
         </div>
         <div className="flex justify-start pt-1 gap-5">
-          <Like />
+          <Like like={like} handleSubmitLike={handleSubmitLike} />
 
           <div className="flex items-center gap-1 py-3">
             <button className="hover:bg-gray-100 p-1 rounded-full">

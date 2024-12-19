@@ -9,7 +9,8 @@ export const useCreateTweets = () => {
     const {mutate: postTweet, isPending} = useMutation({
         mutationFn: (tweets) => TweetApi({user_id: tweets.user_id, captions: tweets.captions, images: tweets.images, modified_at: tweets.modified_at}),
         onSuccess: (tweets) => {
-            queryClient.setQueryData(["tweets"], tweets.tweets);
+            // queryClient.setQueryData(["tweets"], tweets.tweets);
+            queryClient.invalidateQueries({queryKey: ["likes"]})
             navigate("/")
         },
         onError: (err) => console.error(err)
