@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addLikes } from "../../services/apiLikes";
+import { addLike } from "../../services/apiLikes";
 
 export const useGetLike = () => {
     const queryClient = useQueryClient();
     
     const { mutate: handleGetLike, isPending } = useMutation({
-        mutationFn: ({userId, id}) => addLikes(userId, id),
-        onSuccess: likes => {
+        mutationFn: ({userId, id}) => addLike(userId, id),
+        onSuccess: () => {
             // queryClient.setQueryData(["likes"], likes.likes);
             queryClient.invalidateQueries({queryKey: ["likes"]})
         },

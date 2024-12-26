@@ -2,24 +2,45 @@ import moment from 'moment';
 import { HiMiniUserCircle, HiOutlineChatBubbleBottomCenter, HiOutlineShare } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import Like from '../Like/Like';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useGetLike } from '../Like/useGetLike';
 import { useUser } from '../../auth/useUser';
+import { removeLike } from '../../services/apiLikes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Feed = ({tweet: {id, captions, images, created_at, profiles: {avatar, firstname, lastname, username}}, likesData}) => {
   const postDate = moment().diff(moment(created_at), 'hours') < 24 ? moment(created_at).fromNow() : moment(created_at).format("MMMM Do YYYY, h:mm A");
   const { handleGetLike } = useGetLike();
   const { user } = useUser();
+  
+  const queryClient = useQueryClient();
+
+  const { mutate: handleRemoveLike, isPending } = useMutation({
+    mutationFn: (likeId) => removeLike(likeId),
+    onSuccess: () => {
+        // queryClient.setQueryData(["likes"], likes.likes);
+        queryClient.invalidateQueries({queryKey: ["likes"]})
+    },
+    onError: err => console.error(err.message)
+  });
 
   const like = useMemo(() => {
     return (likesData || []).filter((likeData) => likeData.tweet_id === id);
-  }, [likesData, id])
-  
+  }, [likesData, id]);
+
+
   const handleSubmitLike = e => {
     e.preventDefault();
+
+    const isLike = likesData.some(like => {
+      return like.user_id === user.id && like.tweet_id === id
+    });
     
-    console.log('object :>> ', user.id, id);
-    handleGetLike({userId: user.id, id});
+    if(!isLike) {
+      handleGetLike({userId: user.id, id});
+    } else {
+      handleRemoveLike({id: like[0].id, userId: user.id, tweet_id: id});
+    }
   }
 
   return (

@@ -15,9 +15,9 @@ export const getLikes = async (tweetId = 0) => {
     return data;
 };
 
-export const removeLike = async (id) => {
-    const { error } = await supabase.from('likes').delete().eq('id', id);
+export const removeLike = async ({id, userId, tweet_id}) => {
+    console.log('id', id, userId, tweet_id)
+    const { error } = await supabase.from('likes').delete().eq('id', id).eq('user_id', userId).eq('tweet_id', tweet_id).select();
 
     if (error) throw new Error(error.message);
-    return data;
 };

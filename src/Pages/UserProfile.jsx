@@ -35,7 +35,7 @@ const UserProfile = () => {
     }
 
     return (
-    <div>
+    <>
         <div className="py-3 flex justify-start items-center bg-indigo-600">
             <div className="mx-2">
                 <button onClick={handleBack} className="text-lg inline-block font-medium rounded-full bg-transparent hover:bg-gray-600 w-10 h-10 text-center" type="basic"><FaArrowLeftLong className='text-gray-100 mx-auto' /></button>
@@ -84,7 +84,7 @@ const UserProfile = () => {
             <div className='mx-5'>
                 {tweetsListing.map((tweet, index) => <Feed key={index} tweet={tweet} />)}
             </div>
-    </div>
+    </>
   )
 }
 

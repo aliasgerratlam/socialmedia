@@ -5,3 +5,5 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default supabase;
+
+// https://gxbmcmkkerhemnmtjdfb.supabase.co/rest/v1/likes?id=eq.69
