@@ -39,7 +39,7 @@ const Feed = ({tweet: {id, captions, images, created_at, profiles: {avatar, firs
     if(!isLike) {
       handleGetLike({userId: user.id, id});
     } else {
-      handleRemoveLike({id: like[0].id, userId: user.id, tweet_id: id});
+      handleRemoveLike({userId: user.id, tweet_id: id});
     }
   }
 
@@ -67,7 +67,7 @@ const Feed = ({tweet: {id, captions, images, created_at, profiles: {avatar, firs
           <p className="text-sm text-gray-500">Write your comment...</p>
         </div>
         <div className="flex justify-start pt-1 gap-5">
-          <Like like={like} handleSubmitLike={handleSubmitLike} />
+          <Like like={like} user={user} tweetId={id} handleSubmitLike={handleSubmitLike} />
 
           <div className="flex items-center gap-1 py-3">
             <button className="hover:bg-gray-100 p-1 rounded-full">

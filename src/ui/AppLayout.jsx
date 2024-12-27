@@ -10,8 +10,6 @@ const AppLayout = () => {
     return location.pathname.includes('/profile');
   }, [location]);
 
-  console.log('isProfilePage', isProfilePage)
-
   return (
     <>
       <Header />
